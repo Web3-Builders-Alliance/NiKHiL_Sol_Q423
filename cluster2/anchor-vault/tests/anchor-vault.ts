@@ -74,4 +74,18 @@ describe("vault", () => {
       .then(confirm)
       .then(log);
   });
+
+  it("Close", async () => {
+    const tx = await program.methods
+      .close()
+      .accounts({
+        signer: signer.publicKey,
+        vault: vault,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([signer])
+      .rpc()
+      .then(confirm)
+      .then(log);
+  });
 });

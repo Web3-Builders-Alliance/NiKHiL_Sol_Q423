@@ -38,6 +38,26 @@ pub mod anchor_vault {
 
         transfer(cpi, lamports)
     }
+
+    pub fn close(ctx: Context<Vault>) -> Result<()> {
+        let accounts: Transfer<'_> = Transfer {
+            to: ctx.accounts.signer.to_account_info(),
+            from: ctx.accounts.vault.to_account_info(),
+        };
+
+        let binding = ctx.accounts.signer.clone().key();
+        let signer_seeds: [&[&[u8]]; 1] = [&[b"vault", &binding.as_ref(), &[ctx.bumps.vault]]];
+        // let cpi_ctx =CpiContext::new_with_signer(program:ctx.accounts.system_program.to_account_info(), accounts);
+
+        let cpi_ctx = CpiContext::new_with_signer(
+            ctx.accounts.system_program.to_account_info(),
+            accounts,
+            &signer_seeds,
+        );
+
+        transfer(cpi_ctx, ctx.accounts.vault.lamports())
+        // Ok(())
+    }
 }
 
 #[derive(Accounts)]
