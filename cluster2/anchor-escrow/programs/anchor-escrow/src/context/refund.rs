@@ -5,15 +5,14 @@ use anchor_spl::{
 };
 
 #[derive(Accounts)]
-#[instruction(seed:u64)]
 pub struct Refund<'info> {
     #[account(mut)]
     pub maker: Signer<'info>,
     pub mint_a: Account<'info, Mint>,
     #[account(
         mut,
-        token::mint = mint_a,
-        token::authority = maker
+        associated_token::mint = mint_a,
+        associated_token::authority = maker
     )]
     pub maker_ata_a: Account<'info, TokenAccount>,
     #[account(

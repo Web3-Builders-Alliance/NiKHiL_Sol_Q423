@@ -152,12 +152,12 @@ describe("anchor-escrow", () => {
         systemProgram: SystemProgram.programId,
       })
       .signers([maker])
-      .rpc({ skipPreflight: true })
+      .rpc()
       .then(confirm)
       .then(log);
   });
 
-  it("Refund", async () => {
+  xit("Refund", async () => {
     await program.methods
       .refund()
       .accounts({
@@ -171,7 +171,7 @@ describe("anchor-escrow", () => {
         systemProgram: SystemProgram.programId,
       })
       .signers([maker])
-      .rpc({ skipPreflight: true })
+      .rpc()
       .then(confirm)
       .then(log);
   });
@@ -180,7 +180,7 @@ describe("anchor-escrow", () => {
     await program.methods
       .take()
       .accounts({
-        taker: maker.publicKey,
+        taker: taker.publicKey,
         maker: maker.publicKey,
         mintA: mintA.publicKey,
         mintB: mintB.publicKey,

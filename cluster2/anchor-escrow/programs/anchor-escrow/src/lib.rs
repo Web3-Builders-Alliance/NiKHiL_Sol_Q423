@@ -14,8 +14,8 @@ pub mod anchor_escrow {
     use super::*;
 
     pub fn make(ctx: Context<Make>, seed: u64, deposit: u64, receive: u64) -> Result<()> {
-        ctx.accounts.save_escrow(seed, receive, &ctx.bumps)?;
-        ctx.accounts.deposit(deposit)
+        ctx.accounts.deposit(deposit)?;
+        ctx.accounts.save_escrow(seed, receive, &ctx.bumps)
     }
 
     pub fn refund(ctx: Context<Refund>) -> Result<()> {
